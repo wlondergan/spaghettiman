@@ -3,7 +3,7 @@ package enemies;
 import org.newdawn.slick.Graphics;
 import gameMembers.Point;
 
-public class Slime extends BasicEnemy{
+public class Slime extends BasicEnemy{//this is just a placeholder class, so i'm not gonna bother with comments for now
 	
 	public static final float SPEED = 1.3f;
 	
@@ -26,7 +26,7 @@ public class Slime extends BasicEnemy{
 		newTrajectory(p);
 		setX(getX()+xVel);
 		setY(getY()+yVel);
-		getHealthBar().newPoint(getLoc());
+		getHealthBar().setLoc(p);
 	}
 
 	@Override

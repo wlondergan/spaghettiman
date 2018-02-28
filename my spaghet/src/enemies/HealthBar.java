@@ -12,22 +12,13 @@ import gameMembers.Point;
 
 /**
  * <h1>{@code HealthBar}</h1><p>
- * This class is meant to handle everything related to the health of a monster on the screen. It should only be used as a variable object in a monster's class. This object should be passed the new location of the monster every turn and will follow it around the screen a few frames behind.
+ * This class is meant to handle everything related to the health of a monster on the screen. It should only be used as a variable object in a monster's class. This object should be passed the new location of the monster every turn and will follow it around the screen.
  * <p>
- * This class's graphical representation is composed of an {@code Image} and 2 instances of {@code Rectangle}. The {@code Rectangle} is used to represent the health of the character.
- * <p>
- * {@code HealthBar} also contains a {@code float[][]} that holds the points of the last location that the character was in. This is intended to give the {@code HealthBar} a "following" characteristic.
+ * This class's graphical representation is composed of an {@code Image} and 2 instances of {@code Rectangle}. The {@code Rectangle} is used to represent the health of the character. (TODO: change this, maybe?)
  * <p>
  * @author Hughes
  */
 public class HealthBar extends Drawable{
-
-
-	public static final int FOLLOW_FRAMES = 20;//the number of frames behind the character that the health bar follows
-
-
-	private ArrayList<Point> lastPoints;//array of points that the character has been in
-
 
 	private float scale;//the scale of the object, allows for camera movement
 
@@ -39,9 +30,6 @@ public class HealthBar extends Drawable{
 
 
 	private float hp;//the remaining health of the player
-
-
-	private Image healthBarFrame;//the frame for the health bar
 
 
 	/**
@@ -56,11 +44,6 @@ public class HealthBar extends Drawable{
 	 */
 	public HealthBar(float health, float x, float y, float scale){
 		super(x, y);
-		lastPoints = new ArrayList<>();
-		for(int i = 0; i<FOLLOW_FRAMES; i++){
-			lastPoints.add(new Point(x, y+40));
-		}
-		String s;
 		healthTotal = health;
 		hp = health;
 		this.scale = scale;
@@ -74,24 +57,11 @@ public class HealthBar extends Drawable{
 	 */
 	public void draw(Graphics g){
 		g.setColor(Color.gray);
-		g.fillRect(getCurrentLoc().x, getCurrentLoc().y, 100*scale, 20*scale);
+		g.fillRect(getLoc().x, getLoc().y, 100*scale, 20*scale);//these numbers might have to be tweaked
 		g.setColor(Color.red);
-		g.fillRect(getCurrentLoc().x, getCurrentLoc().y, (hp/healthTotal)*100*scale, 20*scale);
+		g.fillRect(getLoc().x, getLoc().y, (hp/healthTotal)*100*scale, 20*scale);//these as well
 	}
-
-
-	/**
-	 * <h1>{@code newPoint}</h1>
-	 * <p>
-	 * Use this method every time that you update the class that has this object. This is meant to take the current position of the character and pass it to this class so that this object can "follow" the character around a few frames behind.
-	 * @param x  the x location of the character
-	 * @param y  the y location of the character
-	 */
-	public void newPoint(Point p){
-		lastPoints.remove(lastPoints.size()-1);
-		lastPoints.add(0,p);
-	}
-
+	
 	
 	/**
 	 * <h1>{@code takeDamage}</h1>
@@ -109,21 +79,14 @@ public class HealthBar extends Drawable{
 			hp -=damage;
 	}
 
-	
-	/**
-	 * <h1>{@code getCurrentLoc}</h1>
-	 * <p>
-	 * Returns the current location of the object in {@code Point(x,y)} form. May have to be unpacked.
-	 * @return The current {@code Point} location of the {@code HealthBar}
-	 */
-	public Point getCurrentLoc(){
-		return lastPoints.get(lastPoints.size()-1);
-	}
-
 
 	public float getHP(){
 		return hp;
 	}
 
+	
+	public void setHP(float hp){
+		this.hp = hp;
+	}
 
 }
