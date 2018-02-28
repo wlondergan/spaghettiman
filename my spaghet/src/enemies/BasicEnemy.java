@@ -10,8 +10,6 @@ import gameMembers.Point;
  * <p>
  * This class represents any enemy in the game. They all possess health bars and a few basic things that define them as enemies. <br>
  * You should extend this class if you have any intent to create a new enemy, even a boss (TODO: Create a boss class??)
- * 
- *
  */
 public abstract class BasicEnemy extends EnvironmentMember{
 	

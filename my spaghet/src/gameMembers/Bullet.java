@@ -9,7 +9,6 @@ public class Bullet extends EnvironmentMember {
 	
 	public static final float SPEED = 5.0f;//This constant represents how fast the bullet moves (as a polar vector.)
 	
-	
 	private float xVel, yVel;//These velocity variables represent the Cartesian slope values of the float. This is needed because the screen rendering is done in a Cartesian coordinate system.
 	
 	

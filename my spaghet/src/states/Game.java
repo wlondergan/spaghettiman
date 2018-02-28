@@ -21,9 +21,13 @@ import gameMembers.Bullet;
 import gameMembers.PlayerTest;
 
 public class Game extends BasicGameState{
+	
 	StateBasedGame game; //the StateBasedGame object
+	
 	PlayerTest p;
+	
 	ArrayList<Bullet> bullets;
+	
 	Slime s;
 	
 	/**
@@ -40,7 +44,7 @@ public class Game extends BasicGameState{
 		
 		s = new Slime(0, 300);
 		
-		gc.setMouseCursor(new Image("assets/cursor.png"), 25, 25);//changes the game's mouse cursor, couldn't do it in GraphicsMain because it isn't an OpenGL class
+		gc.setMouseCursor(new Image("assets/cursor.png"), 25, 25);//changes the game's mouse cursor, couldn't do it in GraphicsMain because it isn't an OpenGL class (shrug)
 	}
 
 
@@ -51,7 +55,7 @@ public class Game extends BasicGameState{
 	 */
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-		p.draw(g);
+		p.draw(g);//draw everything to the screen using the draw method of all of the Drawables (TODO: add everything to an array and draw it in one loop?)
 		s.draw(g);
 		for(int i =0; i<bullets.size(); i++) {
 			bullets.get(i).draw(g);
@@ -70,7 +74,7 @@ public class Game extends BasicGameState{
 			bullets.get(j).updateLoc();
 		}
 		for(int j = bullets.size()-1; j>=0; j--)//check intersection for all of the bullets
-			if(!(bullets.get(j).getHitbox().intersects(new Rectangle(0,0, game.getContainer().getWidth(), game.getContainer().getHeight()))))//if it doesn't collide with the screen, remove it
+			if(!(bullets.get(j).getHitbox()[0].intersects(new Rectangle(0,0, game.getContainer().getWidth(), game.getContainer().getHeight()))))//if it doesn't collide with the screen, remove it
 					bullets.remove(j);
 	}
 
@@ -105,12 +109,12 @@ public class Game extends BasicGameState{
 	 */
 	@Override
 	public void mousePressed(int button, int x, int y){
-		bullets.add(new Bullet((float)p.getHitbox().getCenterX(),(float)p.getHitbox().getCenterY(),(float)x, (float)y));
+		bullets.add(new Bullet((float)p.getHitbox()[0].getCenterX(),(float)p.getHitbox()[0].getCenterY(),(float)x, (float)y));//not using Points to save memory, this is seriously iffy and we'll pretend this is not a thing for now
 	}
 	
 	/**
 	 * keyReleased<br>
-	 * This method is run whenever a keyboard button is released. int key is the key that was released, not sure what char c is tho
+	 * This method is run whenever a keyboard button is released. int key is the key that was released, not sure what char c is tho, pretend it's not a thing
 	 */
 	@Override
 	public void keyReleased(int key, char c){

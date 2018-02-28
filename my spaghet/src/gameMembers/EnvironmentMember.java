@@ -42,7 +42,7 @@ public abstract class EnvironmentMember extends Drawable{
 	 * <code>getHitbox</code><br>
 	 * Gives a hitbox for the character. Makes collision detection somewhat easier.<br>
 	 * <br>
-	 * This hitbox is in the form of a <code>Java.awt.Rectangle</code>. The relevant constructor for the <code>Rectangle</code> is <br><code>(int xLoc, int yLoc, int xLength, int yLength)</code>.<p>
+	 * This hitbox is in the form of a an array of <code>Java.awt.Rectangle</code>. The relevant constructor for the <code>Rectangle</code> is <br><code>(int xLoc, int yLoc, int xLength, int yLength)</code>.<p>
 	 * This class is used because of its intersects method: 
 	 * <code>
 	 * if(p.getHitBox().intersects(g.getHitbox))
@@ -50,8 +50,24 @@ public abstract class EnvironmentMember extends Drawable{
 	 * is the intended use for the Rectangle. This is baked in and makes collision a lot easier.
 	 * @return r  the {@code Rectangle} hitbox of the {@code EnvironmentMember}
 	 */
-	public Rectangle getHitbox(){
-		return new Rectangle((int)getX(), (int)getY(), characterImage.getScaledCopy(scale).getWidth(), characterImage.getScaledCopy(scale).getHeight());
+	public Rectangle[] getHitbox(){
+		return new Rectangle[] {new Rectangle((int)getX(), (int)getY(), characterImage.getScaledCopy(scale).getWidth(), characterImage.getScaledCopy(scale).getHeight())};
+	}
+	
+	
+	/**
+	 * {@code intersects}<p>
+	 * This method should be used to determine if 2 {@code EnvironmentMember} objects are colliding with each other. Since the hitbox is defined as an array, it's useful to have this one baked in method.<br>
+	 * This method might have to be rewritten, but for now this works fine.
+	 * @param e  the {@code EnvironmentMember} to be checked against for collision
+	 * @return  whether or not an intersection is occurring
+	 */
+	public boolean intersects(EnvironmentMember e){
+		for(Rectangle i : this.getHitbox())
+			for(Rectangle j : e.getHitbox())
+				if(i.intersects(j))
+					return true;
+		return false;
 	}
 	
 	
@@ -73,6 +89,7 @@ public abstract class EnvironmentMember extends Drawable{
 	 * <br><code>
 	 * for(Drawable d : drawables)<br>
 	 * d.draw
+	 * </code>
 	 * @param g  the Graphics object required to draw
 	 */
 	public void draw(Graphics g){
