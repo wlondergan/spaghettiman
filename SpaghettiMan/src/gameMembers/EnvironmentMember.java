@@ -23,7 +23,10 @@ public abstract class EnvironmentMember extends Drawable{
 	
 	
 	/**
-	 * The constructor for the class. Gives initial values to all of the instance variables. <br>x and y are the location of the object (inherited from {@code Drawable}). <br>{@code String imagePath} is the path of the image for this {@code EnvironmentMember}. <br>{@code float scale} is the scale of the {@code Image} for the character (for example, 0.5 would make the character's {@code Image} and hitbox half of their size at {@code scale = 1})
+	 * The constructor for the class. Gives initial values to all of the instance variables.<br>
+	 * x and y are the location of the object (inherited from {@code Drawable}).<br>
+	 * {@code String imagePath} is the path of the image for this {@code EnvironmentMember}.<br>
+	 * {@code float scale} is the scale of the {@code Image} for the character (for example, 0.5 would make the character's {@code Image} and hitbox half of their size at {@code scale = 1})
 	 * @param x  the initial starting x coordinate for the object
 	 * @param y  the initial starting y coordinate for the object
 	 * @param imagePath  the location of the {@code Image} for the object

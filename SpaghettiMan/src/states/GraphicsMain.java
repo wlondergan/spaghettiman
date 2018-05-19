@@ -38,7 +38,7 @@ public class GraphicsMain extends StateBasedGame{
 	 */
 	public static void main(String[] args){
 		try{//throws an exception so you need to use the try-catch block
-			AppGameContainer appgc = new AppGameContainer(new GraphicsMain("squares"));
+			AppGameContainer appgc = new AppGameContainer(new GraphicsMain("hi"));
 			appgc.setDisplayMode(1024, 576, false); // To do: Implement an extra window that lets you pick screen resolution, maybe
 			appgc.setTargetFrameRate(60);//locks the framerate
 			appgc.setVSync(true);//turns on vsync

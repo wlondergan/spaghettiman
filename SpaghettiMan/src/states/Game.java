@@ -19,17 +19,17 @@ import org.newdawn.slick.state.StateBasedGame;
 import enemies.Slime;
 import gameMembers.Bullet;
 import gameMembers.PlayerTest;
+import rooms.Door;
+import rooms.Level;
 
 public class Game extends BasicGameState{
-	
+
 	StateBasedGame game; //the StateBasedGame object
-	
+
 	PlayerTest p;
-	
-	ArrayList<Bullet> bullets;
-	
-	Slime s;
-	
+
+	Level l;
+
 	/**
 	 * init<br>
 	 * runs when the class is created inside a window, use this to initialize the variables and everything needed for the game
@@ -37,13 +37,11 @@ public class Game extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		this.game = game;//don't touch this line
-		
+
 		p = new PlayerTest(0,0);//initialize p at the point (0,0)
-		
-		bullets = new ArrayList<>();//initialize the bullets ArrayList
-		
-		s = new Slime(0, 300);
-		
+
+		l = new Level(1);
+
 		gc.setMouseCursor(new Image("assets/cursor.png"), 25, 25);//changes the game's mouse cursor, couldn't do it in GraphicsMain because it isn't an OpenGL class (shrug)
 	}
 
@@ -56,10 +54,7 @@ public class Game extends BasicGameState{
 	@Override
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		p.draw(g);//draw everything to the screen using the draw method of all of the Drawables (TODO: add everything to an array and draw it in one loop?)
-		s.draw(g);
-		for(int i =0; i<bullets.size(); i++) {
-			bullets.get(i).draw(g);
-		}
+		l.getCurrentRoom().draw(g);
 	}
 
 	/**
@@ -69,13 +64,16 @@ public class Game extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int i) throws SlickException {
 		p.updateLoc();
-		s.move(p.getLoc());
-		for(int j =0; j<bullets.size(); j++) {//update all bullet locations
-			bullets.get(j).updateLoc();
-		}
-		for(int j = bullets.size()-1; j>=0; j--)//check intersection for all of the bullets
-			if(!(bullets.get(j).getHitbox()[0].intersects(new Rectangle(0,0, game.getContainer().getWidth(), game.getContainer().getHeight()))))//if it doesn't collide with the screen, remove it
-					bullets.remove(j);
+		for(Door d : l.getCurrentRoom().getDoors())
+			if(p.intersects(d))
+				if(d.dir == Door.DoorDirection.LEFT)
+					l.move(Level.LEFT);
+				else if(d.dir == Door.DoorDirection.UP)
+					l.move(Level.UP);
+				else if(d.dir == Door.DoorDirection.RIGHT)
+					l.move(Level.RIGHT);
+				else
+					l.move(Level.DOWN);
 	}
 
 	/**
@@ -95,11 +93,11 @@ public class Game extends BasicGameState{
 		case Input.KEY_3://if it's "3" on the keyboard, do:
 			game.enterState(3);//enters the #3 gameState (the class whose getId() method returns 3)
 			break;
-	
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * mousePressed<br>
 	 * This method is run whenever a mouse button is pressed. 
@@ -109,9 +107,9 @@ public class Game extends BasicGameState{
 	 */
 	@Override
 	public void mousePressed(int button, int x, int y){
-		bullets.add(new Bullet((float)p.getHitbox()[0].getCenterX(),(float)p.getHitbox()[0].getCenterY(),(float)x, (float)y));//not using Points to save memory, this is seriously iffy and we'll pretend this is not a thing for now
+		
 	}
-	
+
 	/**
 	 * keyReleased<br>
 	 * This method is run whenever a keyboard button is released. int key is the key that was released, not sure what char c is tho, pretend it's not a thing
