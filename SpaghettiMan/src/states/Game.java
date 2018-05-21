@@ -74,6 +74,7 @@ public class Game extends BasicGameState{
 					l.move(Level.RIGHT);
 				else
 					l.move(Level.DOWN);
+		System.out.println(l.currentC + "" + l.currentR);
 	}
 
 	/**
