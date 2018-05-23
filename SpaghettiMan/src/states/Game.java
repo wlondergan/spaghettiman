@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import enemies.Slime;
 import gameMembers.Bullet;
-import gameMembers.PlayerTest;
+import gameMembers.Player;
 import rooms.Door;
 import rooms.Level;
 
@@ -26,7 +26,7 @@ public class Game extends BasicGameState{
 
 	StateBasedGame game; //the StateBasedGame object
 
-	PlayerTest p;
+	Player p;
 
 	Level l;
 
@@ -38,7 +38,7 @@ public class Game extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		this.game = game;//don't touch this line
 
-		p = new PlayerTest(0,0);//initialize p at the point (0,0)
+		p = new Player(0,0);//initialize p at the point (0,0)
 
 		l = new Level(1);
 
@@ -102,9 +102,9 @@ public class Game extends BasicGameState{
 	/**
 	 * mousePressed<br>
 	 * This method is run whenever a mouse button is pressed. 
-	 * @Param int button: which button on the mouse was pressed
-	 * @Param int x: the current x location of the cursor
-	 * @Param int y: the current y location of the cursor
+	 * @param button  which button on the mouse was pressed
+	 * @param x  the current x location of the cursor
+	 * @param y  the current y location of the cursor
 	 */
 	@Override
 	public void mousePressed(int button, int x, int y){

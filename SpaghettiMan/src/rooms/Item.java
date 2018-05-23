@@ -1,5 +1,5 @@
 package rooms;
 
-public class Item extends EnvironmentMember{
+public class Item /*extends EnvironmentMember*/{
 
 }
