@@ -13,7 +13,7 @@ import gameMembers.Point;
  */
 public abstract class BasicEnemy extends EnvironmentMember{
 	
-	//this represents the HealthBar of the class. All Enemies should have a health bar, even bosses :P
+	//this represents the HealthBar of the class. All Enemies should have a health bar, even bosses
 	private HealthBar healthBar;
 	
 	/**
@@ -38,6 +38,12 @@ public abstract class BasicEnemy extends EnvironmentMember{
 	
 	@Override
 	public abstract void draw(Graphics g);
+	
+	public void follow(Point location, float vel) {
+		float theta = (float)Math.atan2(location.x-this.getX(), location.y-this.getY());
+		setX(getX()+ (float)(Math.sin(theta))*vel);
+		setY(getY()+ (float)(Math.cos(theta))*vel);
+	}
 	
 	
 	public HealthBar getHealthBar(){

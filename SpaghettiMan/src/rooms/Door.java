@@ -35,7 +35,7 @@ public class Door extends EnvironmentMember{
 		LEFT, RIGHT, UP, DOWN;
 	}
 	
-	private static float getX(DoorDirection dir) {//gets the x location for any door given the direction
+	public static float getX(DoorDirection dir) {//gets the x location for any door given the direction
 		if(dir == DoorDirection.UP||dir == DoorDirection.DOWN)
 			return 1024/2-50;
 		else if(dir == DoorDirection.LEFT)
@@ -44,7 +44,7 @@ public class Door extends EnvironmentMember{
 			return 1024-10;
 	}
 	
-	private static float getY(DoorDirection dir) {//gets the y location for any door given the direction
+	public static float getY(DoorDirection dir) {//gets the y location for any door given the direction
 		if(dir == DoorDirection.LEFT||dir == DoorDirection.RIGHT)
 			return 576/2-50;
 		else if(dir == DoorDirection.UP)

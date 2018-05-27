@@ -7,7 +7,7 @@ package gameMembers;
  */
 public class Bullet extends EnvironmentMember {
 	
-	public static final float SPEED = 5.0f;//This constant represents how fast the bullet moves (as a polar vector.)
+	private float vel = 5.0f;//This constant represents how fast the bullet moves (as a polar vector.)
 	
 	private float xVel, yVel;//These velocity variables represent the Cartesian slope values of the float. This is needed because the screen rendering is done in a Cartesian coordinate system.
 	
@@ -19,12 +19,13 @@ public class Bullet extends EnvironmentMember {
 	 * @param cx  the x coordinate destination of the bullet
 	 * @param cy  the y coordinate destination of the bullet
 	 */
-	public Bullet(float px, float py, float cx, float cy) {
+	public Bullet(float vel, float px, float py, float cx, float cy) {
 		super(px, py, "assets/Bullet.png", .025f);//super constructor
+		this.vel = vel;
 		//now, triangles
 		double theta = Math.atan2(cx-px, cy-py);//find the angle that the cursor is at relative to the origin
-		xVel = (float)(SPEED*Math.sin(theta));//turn this into x and y components of a vector with length SPEED
-		yVel = (float)(SPEED*Math.cos(theta));
+		xVel = (float)(vel*Math.sin(theta));//turn this into x and y components of a vector with length SPEED
+		yVel = (float)(vel*Math.cos(theta));
 	}//ask Hughes to draw out what this does if you don't get it. Basically it just turns the location on the screen into an (x,y) velocity pair to travel to the point.
 	
 	

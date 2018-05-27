@@ -66,8 +66,10 @@ public class Game extends BasicGameState{
 		p.updateLoc();
 		for(Door d : l.getCurrentRoom().getDoors())
 			if(p.intersects(d))
-				if(d.dir == Door.DoorDirection.LEFT)
+				if(d.dir == Door.DoorDirection.LEFT) {
 					l.move(Level.LEFT);
+					p.setX(d.getX());
+				}
 				else if(d.dir == Door.DoorDirection.UP)
 					l.move(Level.UP);
 				else if(d.dir == Door.DoorDirection.RIGHT)

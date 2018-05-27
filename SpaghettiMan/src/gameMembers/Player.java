@@ -1,7 +1,12 @@
 package gameMembers;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+
+import enemies.BasicEnemy;
+import enemies.ShootyGuy;
 
 /**
  * The player character. Directly interacted with by the player of the game.<br>
@@ -11,8 +16,16 @@ import org.newdawn.slick.Input;
  */
 public class Player extends EnvironmentMember{
 
-	private static final float VEL = 3f;
-	private static final float DIAG_VEL = VEL/1.414f;
+	private int health;
+	private int currentFrame;
+
+	private float vel;
+	private float diagVel;
+	private static final int INVINCIBILITY_FRAMES = 20;
+	private int bulletFrames;
+	private float damage;
+
+	private ArrayList<Bullet> bullets;
 
 	/**
 	 * Calls the EnvironmentMember constructor.
@@ -22,6 +35,14 @@ public class Player extends EnvironmentMember{
 	 */
 	public Player(int x, int y){
 		super(x, y, "assets/dude.png", 0.25f);
+		health = 100;
+		currentFrame = 20;
+		bullets = new ArrayList<Bullet>();
+		vel = 3f;
+		diagVel = vel/1.414f;
+		bulletFrames = 20;
+		damage = 15;
+
 	}
 
 	private boolean left, right, up, down;
@@ -63,31 +84,60 @@ public class Player extends EnvironmentMember{
 	public void updateLoc(){
 		if(left&&up||up&&right||right&&down||left&&down) {
 			if(left&&down) {
-				setX(getX()-DIAG_VEL);
-				setY(getY()+DIAG_VEL);
+				setX(getX()-diagVel);
+				setY(getY()+diagVel);
 			}
 			if(left&&up) {
-				setX(getX()-DIAG_VEL);
-				setY(getY()-DIAG_VEL);
+				setX(getX()-diagVel);
+				setY(getY()-diagVel);
 			}
 			if(right&&down) {
-				setX(getX()+DIAG_VEL);
-				setY(getY()+DIAG_VEL);
+				setX(getX()+diagVel);
+				setY(getY()+diagVel);
 			}
 			if(right&&up) {
-				setX(getX()+DIAG_VEL);
-				setY(getY()-DIAG_VEL);
+				setX(getX()+diagVel);
+				setY(getY()-diagVel);
 			}
 			return;
 		}
 		if(left)
-			setX(getX()-3);
+			setX(getX()-vel);
 		if(right)
-			setX(getX()+3);
+			setX(getX()+vel);
 		if(up)
-			setY(getY()-3);
+			setY(getY()-vel);
 		if(down)
-			setY(getY()+3);
+			setY(getY()+vel);
+	}
+
+	public void update(ArrayList<EnvironmentMember> enemies) {
+		if(currentFrame<20) {
+			currentFrame++;
+			return;
+		}
+		for(EnvironmentMember e: enemies) {
+			if(e instanceof ShootyGuy) {
+				ShootyGuy t = (ShootyGuy)e;//gross but what can you do
+				for(int i = t.getBullets().size()-1; i>=0; i--) {
+					if(intersects(t.getBullets().get(i))) {
+						health -= 10;
+						t.getBullets().remove(i);
+					}
+				}
+			}
+
+			if(intersects(e))
+				health-=20;
+			for(Bullet b : bullets) {
+				if(b.intersects(e)) {
+					BasicEnemy t = (BasicEnemy)e;
+					t.getHealthBar().takeDamage(damage);
+				}
+			}
+		}
+
+
 	}
 
 	@Override
@@ -111,4 +161,7 @@ public class Player extends EnvironmentMember{
 		return down;
 	}
 
+	public int getHealth() {
+		return health;
+	}
 }

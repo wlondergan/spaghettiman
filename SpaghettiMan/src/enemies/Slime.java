@@ -13,19 +13,10 @@ public class Slime extends BasicEnemy{//this is just a placeholder class, so i'm
 	
 	public Slime(float x, float y){
 		super(x, y, "assets/slime.png", 0.5f, 1f);
-		newTrajectory(new Point(0,0));
-	}
-	
-	private void newTrajectory(Point location) {
-		float theta = (float)Math.atan2(location.x-this.getX(), location.y-this.getY());
-		xVel = (float)(Math.sin(theta))*SPEED;
-		yVel = (float)(Math.cos(theta))*SPEED;
 	}
 
 	public void move(Point p) {
-		newTrajectory(p);
-		setX(getX()+xVel);
-		setY(getY()+yVel);
+		follow(p, SPEED);
 		getHealthBar().setLoc(p);
 	}
 
