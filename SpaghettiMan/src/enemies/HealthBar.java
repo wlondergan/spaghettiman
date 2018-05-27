@@ -88,5 +88,9 @@ public class HealthBar extends Drawable{
 	public void setHP(float hp){
 		this.hp = hp;
 	}
+	
+	public boolean isDead() {
+		return hp<=0;
+	}
 
 }

@@ -39,6 +39,12 @@ public abstract class BasicEnemy extends EnvironmentMember{
 	@Override
 	public abstract void draw(Graphics g);
 	
+	/**
+	 * This method provides a convenient way to follow a {@code Point}. It uses the pythagorean theorem to determine a proper x and y velocity to follow the Point.
+	 * Many classes use this method so it's easier to write it once and then never have to use it again.
+	 * @param location  the {@code Point} location to be followed
+	 * @param vel  the speed of the character calling this method
+	 */
 	public void follow(Point location, float vel) {
 		float theta = (float)Math.atan2(location.x-this.getX(), location.y-this.getY());
 		setX(getX()+ (float)(Math.sin(theta))*vel);

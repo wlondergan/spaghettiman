@@ -47,9 +47,17 @@ public class Player extends EnvironmentMember{
 
 	private boolean left, right, up, down;
 
+	/**
+	 * This method accepts a key input as the parameter. <br>
+	 * This should be called as an input from some other class that handles input.<p>
+	 * Every input comes in as an integer and should be used in conjunction with the Input constants.<br>
+	 * For example, {@code Input.KEY_A} will be the integer passed to this method when the "A" button is pressed on the keyboard.
+	 * 
+	 * @param key  the key that was pressed, as an integer from the {@code Input} class.
+	 */
 	public void keyDown(int key){
 		switch(key){
-		case Input.KEY_A:
+		case Input.KEY_A://turns the direction booleans on when a key is pressed.
 			left = true;
 			break;
 		case Input.KEY_D:
@@ -64,6 +72,11 @@ public class Player extends EnvironmentMember{
 		}
 	}
 
+	/**
+	 * The opposite of the {@link keyDown} method. It turns off direction variables when the appropriate keys are pressed.<br>
+	 * See {@code keyDown} for a more complete description of what the {@code key} integer is.
+	 * @param key  The key that was released, as an integer from the {@code Input} class.
+	 */
 	public void keyUp(int key){
 		switch(key){
 		case Input.KEY_A:
@@ -81,10 +94,16 @@ public class Player extends EnvironmentMember{
 		}
 	}
 
+	/**
+	 * This method updates the location of the character based on what keys are pressed.<br>
+	 * It handles diagonal movement as an up and down movement, both of which are roughly the normal velocity divided by the square root of two, per the pythagorean theorem.<br>
+	 * <p>
+	 * This method should be called from the main class that handles game objects, to update the location of the character.
+	 */
 	public void updateLoc(){
 		if(left&&up||up&&right||right&&down||left&&down) {
 			if(left&&down) {
-				setX(getX()-diagVel);
+				setX(getX()-diagVel);//diagonal movements
 				setY(getY()+diagVel);
 			}
 			if(left&&up) {
@@ -102,7 +121,7 @@ public class Player extends EnvironmentMember{
 			return;
 		}
 		if(left)
-			setX(getX()-vel);
+			setX(getX()-vel);//vertical movements
 		if(right)
 			setX(getX()+vel);
 		if(up)
@@ -111,7 +130,23 @@ public class Player extends EnvironmentMember{
 			setY(getY()+vel);
 	}
 
+	/**
+	 * This method handles the collisions and damage from the player and enemies.<br>
+	 * It takes in a list of enemies from the room and decides whether or not the character should accept any damage from them.
+	 * If the character is damaged, it goes into invincibility frames, during which period of time the character can't take any damage from the environment.<br>
+	 * Otherwise, it checks to see if the character is intersecting any enemies (or their projectiles) and determines whether or not the character should take any damage. 
+	 * @param enemies  an {@code ArrayList} of enemies that the character could take or give damage from/to
+	 */
 	public void update(ArrayList<EnvironmentMember> enemies) {
+		
+		for(EnvironmentMember e: enemies) {
+			for(Bullet b : bullets) {
+				if(b.intersects(e)) {
+					BasicEnemy t = (BasicEnemy)e;
+					t.getHealthBar().takeDamage(damage);
+				}
+			}
+		}
 		if(currentFrame<20) {
 			currentFrame++;
 			return;
@@ -129,12 +164,6 @@ public class Player extends EnvironmentMember{
 
 			if(intersects(e))
 				health-=20;
-			for(Bullet b : bullets) {
-				if(b.intersects(e)) {
-					BasicEnemy t = (BasicEnemy)e;
-					t.getHealthBar().takeDamage(damage);
-				}
-			}
 		}
 
 
