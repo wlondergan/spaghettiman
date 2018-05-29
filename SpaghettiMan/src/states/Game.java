@@ -7,6 +7,7 @@ package states;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Mouse;
 //imports
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -110,16 +111,9 @@ public class Game extends BasicGameState{
 
 	}
 
-	/**
-	 * mousePressed<br>
-	 * This method is run whenever a mouse button is pressed. 
-	 * @param button  which button on the mouse was pressed
-	 * @param x  the current x location of the cursor
-	 * @param y  the current y location of the cursor
-	 */
-	@Override
-	public void mousePressed(int button, int x, int y){
-		
+	
+	public void mousePressed(int key, char c) {
+		p.mousePressed(key, c, Mouse.getX(), Mouse.getY());
 	}
 
 	/**

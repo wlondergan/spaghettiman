@@ -93,6 +93,10 @@ public class Player extends EnvironmentMember{
 			break;
 		}
 	}
+	
+	public void mousePressed(int key, char c, int x, int y) {
+		bullets.add(new Bullet(20, getCenter().x, getCenter().y, x, y));
+	}
 
 	/**
 	 * This method updates the location of the character based on what keys are pressed.<br>
@@ -172,6 +176,8 @@ public class Player extends EnvironmentMember{
 	@Override
 	public void draw(Graphics g){
 		g.drawImage(getImage().getScaledCopy(getScale()), getX(), getY());
+		for(Bullet b: bullets)
+			b.draw(g);
 	}
 
 	public boolean isLeft() {
