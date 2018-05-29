@@ -8,7 +8,7 @@ import gameMembers.Point;
 
 public class ShootyGuy extends BasicEnemy{
 	
-	public static final float WALK_VEL = .01f;
+	public static final float WALK_VEL = .5f;
 	
 	public static final float BULLET_VEL = 10;
 	
@@ -28,6 +28,7 @@ public class ShootyGuy extends BasicEnemy{
 		g.drawImage(getImage().getScaledCopy(getScale()), getX(), getY());
 		for(Bullet b: bullets)
 			b.draw(g);
+		getHealthBar().draw(g);
 	}
 	
 	public void update(Point p) {
@@ -37,6 +38,9 @@ public class ShootyGuy extends BasicEnemy{
 			currentFrame = 0;
 		}
 		follow(p, WALK_VEL);
+		for(Bullet b: bullets)
+			b.updateLoc();
+		getHealthBar().setLoc(getLoc());
 	}
 	
 	public ArrayList<Bullet> getBullets(){

@@ -26,7 +26,7 @@ public abstract class BasicEnemy extends EnvironmentMember{
 	 */
 	public BasicEnemy(float x, float y, String imagePath, float scale, float health){
 		super(x, y, imagePath, scale);
-		healthBar = new HealthBar(health, x, y, scale);
+		healthBar = new HealthBar(health, x, y, 0.5f);
 	}
 	
 	/**

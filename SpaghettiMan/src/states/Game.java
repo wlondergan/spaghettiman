@@ -16,6 +16,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import enemies.BasicEnemy;
 import enemies.Slime;
 import gameMembers.Bullet;
 import gameMembers.Player;
@@ -68,15 +69,23 @@ public class Game extends BasicGameState{
 			if(p.intersects(d))
 				if(d.dir == Door.DoorDirection.LEFT) {
 					l.move(Level.LEFT);
-					p.setX(d.getX());
+					p.setX(Door.getX(Door.DoorDirection.RIGHT)-p.getImage().getScaledCopy(p.getScale()).getWidth());
 				}
-				else if(d.dir == Door.DoorDirection.UP)
+				else if(d.dir == Door.DoorDirection.UP) {
 					l.move(Level.UP);
-				else if(d.dir == Door.DoorDirection.RIGHT)
+					p.setY(Door.getY(Door.DoorDirection.DOWN)-p.getImage().getScaledCopy(p.getScale()).getHeight());
+				}
+				else if(d.dir == Door.DoorDirection.RIGHT) {
 					l.move(Level.RIGHT);
-				else
+					p.setX(Door.getX(Door.DoorDirection.LEFT)+10);
+				}
+				else {
 					l.move(Level.DOWN);
-		System.out.println(l.currentC + "" + l.currentR);
+					p.setY(Door.getY(Door.DoorDirection.UP)+10);
+				}
+		for(BasicEnemy t : l.getCurrentRoom().getMembers()) {
+			t.update(p.getCenter());
+		}
 	}
 
 	/**

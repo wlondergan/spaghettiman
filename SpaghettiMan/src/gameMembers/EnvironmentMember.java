@@ -125,4 +125,8 @@ public abstract class EnvironmentMember extends Drawable{
 	public void setScale(float scale) {
 		this.scale = scale;
 	}
+	
+	public Point getCenter() {
+		return new Point(getX() + getImage().getScaledCopy(scale).getWidth()/2, getY() + getImage().getScaledCopy(scale).getHeight()/2);
+	}
 }

@@ -17,7 +17,7 @@ public class Slime extends BasicEnemy{//this is just a placeholder class, so i'm
 
 	public void move(Point p) {
 		follow(p, SPEED);
-		getHealthBar().setLoc(p);
+		getHealthBar().setLoc(this.getLoc());
 	}
 
 	@Override

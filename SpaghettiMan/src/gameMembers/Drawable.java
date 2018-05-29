@@ -3,7 +3,6 @@ package gameMembers;
 import org.newdawn.slick.Graphics;
 
 /**
- * <h1>{@code Drawable}</h1><p>
  * Anything that will be drawn to the screen needs to inherit {@code Drawable} so that all objects of this type can be drawn to the screen at the same time. Keep in mind that {@code EnvironmentMember} inherits this class so use that class if it's going to interact with the environment.<p>
  * Otherwise, use this class for generic uses that don't actually interact with anything, like UI elements.<p>
  * This class has an x and y so it can be drawn to the screen.

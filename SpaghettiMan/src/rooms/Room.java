@@ -2,6 +2,8 @@ package rooms;
 
 import java.util.ArrayList;
 import org.newdawn.slick.Graphics;
+
+import enemies.BasicEnemy;
 import gameMembers.Drawable;
 import gameMembers.EnvironmentMember;
 
@@ -12,7 +14,7 @@ import gameMembers.EnvironmentMember;
  * @author Hughes
  */
 public class Room extends Drawable{
-	private ArrayList<EnvironmentMember> members;
+	private ArrayList<BasicEnemy> members;
 	private ArrayList<Door> doors;
 	
 	/**
@@ -20,7 +22,7 @@ public class Room extends Drawable{
 	 * @param members  The {@code ArrayList} of members
 	 * @param doors  The {@code ArrayList} of doors
 	 */
-	public Room(ArrayList<EnvironmentMember> members, ArrayList<Door> doors) {
+	public Room(ArrayList<BasicEnemy> members, ArrayList<Door> doors) {
 		super(0,0);
 		this.members = members;
 		this.doors = doors;
@@ -35,11 +37,11 @@ public class Room extends Drawable{
 		//TODO: make the room look pretty
 		for(Door d: doors)
 			d.draw(g);
-		for(EnvironmentMember e: members)
+		for(BasicEnemy e: members)
 			e.draw(g);
 	}
 
-	public ArrayList<EnvironmentMember> getMembers() {
+	public ArrayList<BasicEnemy> getMembers() {
 		return members;
 	}
 
