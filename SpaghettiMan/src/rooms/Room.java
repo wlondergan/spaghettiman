@@ -16,16 +16,19 @@ import gameMembers.EnvironmentMember;
 public class Room extends Drawable{
 	private ArrayList<BasicEnemy> members;
 	private ArrayList<Door> doors;
+	private ArrayList<Item> items;
 	
 	/**
 	 * The only constructor of the class. It assigns passed in values to the members and doors lists.
 	 * @param members  The {@code ArrayList} of members
 	 * @param doors  The {@code ArrayList} of doors
+	 * @param items  The {@code ArrayList} of items
 	 */
-	public Room(ArrayList<BasicEnemy> members, ArrayList<Door> doors) {
+	public Room(ArrayList<BasicEnemy> members, ArrayList<Door> doors, ArrayList<Item> items) {
 		super(0,0);
 		this.members = members;
 		this.doors = doors;
+		this.items = items;
 	}
 
 	/**
@@ -47,6 +50,10 @@ public class Room extends Drawable{
 
 	public ArrayList<Door> getDoors() {
 		return doors;
+	}
+	
+	public ArrayList<Item> getItems() {
+		return items;
 	}
 	
 }

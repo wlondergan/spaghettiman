@@ -8,6 +8,7 @@ import org.newdawn.slick.Input;
 import enemies.BasicEnemy;
 import enemies.HealthBar;
 import enemies.ShootyGuy;
+import rooms.Item;
 
 /**
  * The player character. Directly interacted with by the player of the game.<br>
@@ -173,12 +174,35 @@ public class Player extends EnvironmentMember{
 					}
 				}
 			}
-
 			if(intersects(e))
 				h.takeDamage(20);
 		}
 
-
+	}
+	
+	public void intersectsItem(Item.ItemValue e) {
+		switch(e) {//TODO: add label when an item is picked up
+		case HEALTH:
+			float temp = h.getHP();
+			health+=10;
+			h = new HealthBar(h.getX(), h.getY(), health, h.getScale());
+			h.setHP(temp+10);
+			break;
+		case ATTACK:
+			this.damage += 5;
+			break;
+		case ATTACK_SPEED:
+			if(bulletFrames > 10)
+				bulletFrames -=5;
+			break;
+		case POTION:
+			h.takeDamage(-10);
+			break;
+		case SPEED:
+			this.vel+=.5;
+			this.diagVel = vel/1.414f;
+			break;
+		}
 	}
 
 	@Override

@@ -22,7 +22,6 @@ public class HealthBar extends Drawable{
 
 	private float scale;//the scale of the object, allows for camera movement
 
-
 	/**
 	 * This {@code float} represents the total amount of health that a character has. Since it's {@code final}, it can't be changed.
 	 */
@@ -93,4 +92,7 @@ public class HealthBar extends Drawable{
 		return hp<=0;
 	}
 
+	public float getScale() {
+		return scale;
+	}
 }
