@@ -66,6 +66,11 @@ public class Game extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int i) throws SlickException {
 		p.updateLoc();
+		p.update(l.getCurrentRoom().getMembers());
+		
+		if(gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+			p.mousePressed(gc.getInput().getMouseX(), gc.getInput().getMouseY());
+		
 		for(Door d : l.getCurrentRoom().getDoors())
 			if(p.intersects(d))
 				if(d.dir == Door.DoorDirection.LEFT) {
@@ -84,9 +89,13 @@ public class Game extends BasicGameState{
 					l.move(Level.DOWN);
 					p.setY(Door.getY(Door.DoorDirection.UP)+10);
 				}
-		for(BasicEnemy t : l.getCurrentRoom().getMembers()) {
+
+		for(BasicEnemy t : l.getCurrentRoom().getMembers())
 			t.update(p.getCenter());
-		}
+		
+		for(int n = l.getCurrentRoom().getMembers().size()-1; n>=0; n--)
+			if(l.getCurrentRoom().getMembers().get(n).getHealthBar().isDead())
+				l.getCurrentRoom().getMembers().remove(n);
 	}
 
 	/**
@@ -109,11 +118,6 @@ public class Game extends BasicGameState{
 
 		}
 
-	}
-
-	
-	public void mousePressed(int key, char c) {
-		p.mousePressed(key, c, Mouse.getX(), Mouse.getY());
 	}
 
 	/**

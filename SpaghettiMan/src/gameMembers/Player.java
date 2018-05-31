@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import enemies.BasicEnemy;
+import enemies.HealthBar;
 import enemies.ShootyGuy;
 
 /**
@@ -22,8 +23,10 @@ public class Player extends EnvironmentMember{
 	private float vel;
 	private float diagVel;
 	private static final int INVINCIBILITY_FRAMES = 20;
-	private int bulletFrames;
+	private int bulletFrames, cBulletFrame;
 	private float damage;
+	
+	HealthBar h;
 
 	private ArrayList<Bullet> bullets;
 
@@ -40,9 +43,9 @@ public class Player extends EnvironmentMember{
 		bullets = new ArrayList<Bullet>();
 		vel = 3f;
 		diagVel = vel/1.414f;
-		bulletFrames = 20;
+		bulletFrames = cBulletFrame = 20;
 		damage = 15;
-
+		h = new HealthBar(health, 0, 0, 2);
 	}
 
 	private boolean left, right, up, down;
@@ -94,8 +97,11 @@ public class Player extends EnvironmentMember{
 		}
 	}
 	
-	public void mousePressed(int key, char c, int x, int y) {
-		bullets.add(new Bullet(20, getCenter().x, getCenter().y, x, y));
+	public void mousePressed(int x, int y) {
+		if(cBulletFrame == bulletFrames) {
+			bullets.add(new Bullet(20, getCenter().x, getCenter().y, x, y));
+			cBulletFrame = 0;
+		}
 	}
 
 	/**
@@ -105,6 +111,8 @@ public class Player extends EnvironmentMember{
 	 * This method should be called from the main class that handles game objects, to update the location of the character.
 	 */
 	public void updateLoc(){
+		for(Bullet b: bullets)
+			b.updateLoc();
 		if(left&&up||up&&right||right&&down||left&&down) {
 			if(left&&down) {
 				setX(getX()-diagVel);//diagonal movements
@@ -141,13 +149,13 @@ public class Player extends EnvironmentMember{
 	 * Otherwise, it checks to see if the character is intersecting any enemies (or their projectiles) and determines whether or not the character should take any damage. 
 	 * @param enemies  an {@code ArrayList} of enemies that the character could take or give damage from/to
 	 */
-	public void update(ArrayList<EnvironmentMember> enemies) {
-		
-		for(EnvironmentMember e: enemies) {
+	public void update(ArrayList<BasicEnemy> enemies) {
+		if(cBulletFrame<bulletFrames)
+			cBulletFrame++;
+		for(BasicEnemy e: enemies) {
 			for(Bullet b : bullets) {
 				if(b.intersects(e)) {
-					BasicEnemy t = (BasicEnemy)e;
-					t.getHealthBar().takeDamage(damage);
+					e.getHealthBar().takeDamage(damage);
 				}
 			}
 		}
@@ -160,14 +168,14 @@ public class Player extends EnvironmentMember{
 				ShootyGuy t = (ShootyGuy)e;//gross but what can you do
 				for(int i = t.getBullets().size()-1; i>=0; i--) {
 					if(intersects(t.getBullets().get(i))) {
-						health -= 10;
+						h.takeDamage(20);
 						t.getBullets().remove(i);
 					}
 				}
 			}
 
 			if(intersects(e))
-				health-=20;
+				h.takeDamage(20);
 		}
 
 
@@ -178,6 +186,7 @@ public class Player extends EnvironmentMember{
 		g.drawImage(getImage().getScaledCopy(getScale()), getX(), getY());
 		for(Bullet b: bullets)
 			b.draw(g);
+		h.draw(g);
 	}
 
 	public boolean isLeft() {
