@@ -3,16 +3,12 @@ package enemies;
 import org.newdawn.slick.Graphics;
 import gameMembers.Point;
 
-public class Slime extends BasicEnemy{//this is just a placeholder class, so i'm not gonna bother with comments for now
+public class Slime extends BasicEnemy{
 	
 	public static final float SPEED = 1.3f;
 	
-	private float xVel;
-	
-	private float yVel;
-	
 	public Slime(float x, float y){
-		super(x, y, "assets/slime.png", 0.5f, 1f);
+		super(x, y, "assets/slime.png", 0.5f, 40);
 	}
 
 	public void move(Point p) {

@@ -1,6 +1,5 @@
 package rooms;
 import java.util.ArrayList;
-
 import enemies.JumpyGuy;
 import enemies.ShootyGuy;
 import enemies.Slime;
@@ -14,11 +13,11 @@ import enemies.BasicEnemy;
  * @author Hughes
  */
 public class Level{
-	
+
 	private int stage;//the current stage (level?) of the level
 	private Room[][] currentLevel;//the array that stores the level data as Rooms
 	public int currentR, currentC;//the current location in the level
-	
+
 	/**
 	 * The only constructor. Takes stage as a parameter, although perhaps that should just be removed altogether.<br>
 	 * Constructs the entire level and gives values to all of the rooms.
@@ -29,7 +28,7 @@ public class Level{
 		currentR = currentC = (currentLevel.length-1)/2;
 		this.stage = stage;
 	}
-	
+
 	/**
 	 * This method is the heart of the class. It generates every level procedurally.
 	 * @param stage  The level of the game
@@ -39,21 +38,23 @@ public class Level{
 		Room[][] level = new Room[stage+1][stage+1];//the level starts at 2x2 and increases by one every level
 		//start by generating the starting room and generate the rest of the level. The starting room is always in the center room, so (0,0) on level 1 and (1,1) on level 2
 		level[(level.length-1)/2][(level.length-1)/2] = new Room(new ArrayList<BasicEnemy>(), generateDoors(level, (level.length-1)/2, (level.length-1)/2), new ArrayList<Item>());
-		
+
 		int bossX, bossY;
 		do {
 			bossX = (int)(Math.random()*level.length);
 			bossY = (int)(Math.random()*level.length);
 		}while(level[bossX][bossY]!=null);
-		level[bossX][bossY] = new Room(new ArrayList<BasicEnemy>()/*TODO: generate boss room*/, generateDoors(level, bossX, bossY), new ArrayList<Item>());
-		
+		ArrayList<Door> d = generateDoors(level, bossX, bossY);
+		d.add(new Door(Door.DoorDirection.END));
+		level[bossX][bossY] = new Room(new ArrayList<BasicEnemy>(), d, new ArrayList<Item>());
+
 		int itemX, itemY;
 		do {
 			itemX = (int)(Math.random()*level.length);
 			itemY = (int)(Math.random()*level.length);
 		}while(level[itemX][itemY]!=null);
-		level[itemX][itemY] = new Room(new ArrayList<BasicEnemy>()/*TODO: generate item room*/, generateDoors(level, itemX, itemY), new ArrayList<Item>());
-		
+		level[itemX][itemY] = new Room(new ArrayList<BasicEnemy>(), generateDoors(level, itemX, itemY), itemRoom());
+
 		for(int i = 0; i<level.length; i++)
 			for(int j = 0; j<level.length; j++)
 				if(level[i][j] == null)
@@ -65,12 +66,12 @@ public class Level{
 	 * Generates an item room list of enemies and objects.
 	 * @return  The {@code ArrayList} of objects for an item room
 	 */
-	public static ArrayList<BasicEnemy> itemRoom() {
-		ArrayList<BasicEnemy> item = new ArrayList<BasicEnemy>();
-		//add nothing to the list for now, but later I need to put an item in the room
+	public static ArrayList<Item> itemRoom() {
+		ArrayList<Item> item = new ArrayList<Item>();
+		item.add(new Item(1024/2-30, 576/2-30, 1, Item.pickRandomItem()));
 		return item;
 	}
-	
+
 	/**
 	 * Generates a normal room with normal enemies based on the level.
 	 * @param level  The current level, used to determine difficulty
@@ -78,14 +79,24 @@ public class Level{
 	 */
 	public static ArrayList<BasicEnemy> regRoom(int level) {
 		ArrayList<BasicEnemy> enemies = new ArrayList<BasicEnemy>();
-		//TODO: Add enemies to this using procedural generation
-		enemies.add(new ShootyGuy(500,500));
-		enemies.add(new JumpyGuy(500,500));
-		enemies.add(new Slime(500,500));
-		
+		for(int i = 0; i<level; i++) {
+			int k = (int)(Math.random()*5);
+			switch(k) {
+			case 0:
+				enemies.add(new Slime((int)(Math.random()*768)-128, (int)((int)(Math.random()*432)-72)));
+				break;
+			case 1:
+				enemies.add(new JumpyGuy((int)(Math.random()*768)-128, (int)((int)(Math.random()*432)-72)));
+				break;
+			case 2:
+				enemies.add(new ShootyGuy((int)(Math.random()*768)-128, (int)((int)(Math.random()*432)-72)));
+			default:
+				break;
+			}
+		}
 		return enemies;
 	}
-	
+
 	/**
 	 * Generates a set of doors for a new room given its location in the level.
 	 * @param level  The preexisting level
@@ -105,7 +116,7 @@ public class Level{
 			doors.add(new Door(Door.DoorDirection.DOWN));
 		return doors;
 	}
-	
+
 	public static final int LEFT = 1, UP = 2, RIGHT = 3, DOWN = 4;
 	/**
 	 * This method should be invoked whenever a {@code Door} is touched by the character.<br>
@@ -130,8 +141,12 @@ public class Level{
 			break;
 		}
 	}
-	
+
 	public Room getCurrentRoom() {
 		return currentLevel[currentR][currentC];
+	}
+	
+	public int getStage() {
+		return stage;
 	}
 }

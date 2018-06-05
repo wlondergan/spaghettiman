@@ -23,10 +23,10 @@ public class Player extends EnvironmentMember{
 
 	private float vel;
 	private float diagVel;
-	private static final int INVINCIBILITY_FRAMES = 20;
+	private static final int INVINCIBILITY_FRAMES = 40;
 	private int bulletFrames, cBulletFrame;
 	private float damage;
-	
+
 	HealthBar h;
 
 	private ArrayList<Bullet> bullets;
@@ -38,15 +38,16 @@ public class Player extends EnvironmentMember{
 	 * @param y  The y location of the Player
 	 */
 	public Player(int x, int y){
-		super(x, y, "assets/dude.png", 0.25f);
+		super(x, y, "assets/dude.png", 1f);
 		health = 100;
-		currentFrame = 20;
+		currentFrame = INVINCIBILITY_FRAMES;
 		bullets = new ArrayList<Bullet>();
 		vel = 3f;
 		diagVel = vel/1.414f;
 		bulletFrames = cBulletFrame = 20;
-		damage = 15;
+		damage = 5;
 		h = new HealthBar(health, 0, 0, 2);
+		
 	}
 
 	private boolean left, right, up, down;
@@ -97,7 +98,7 @@ public class Player extends EnvironmentMember{
 			break;
 		}
 	}
-	
+
 	public void mousePressed(int x, int y) {
 		if(cBulletFrame == bulletFrames) {
 			bullets.add(new Bullet(20, getCenter().x, getCenter().y, x, y));
@@ -160,7 +161,7 @@ public class Player extends EnvironmentMember{
 				}
 			}
 		}
-		if(currentFrame<20) {
+		if(currentFrame<INVINCIBILITY_FRAMES) {
 			currentFrame++;
 			return;
 		}
@@ -171,29 +172,32 @@ public class Player extends EnvironmentMember{
 					if(intersects(t.getBullets().get(i))) {
 						h.takeDamage(20);
 						t.getBullets().remove(i);
+						currentFrame = 0;
 					}
 				}
 			}
-			if(intersects(e))
+			if(intersects(e)) {
 				h.takeDamage(20);
+				currentFrame = 0;
+			}
 		}
 
 	}
-	
+
 	public void intersectsItem(Item.ItemValue e) {
 		switch(e) {//TODO: add label when an item is picked up
 		case HEALTH:
-			float temp = h.getHP();
-			health+=10;
-			h = new HealthBar(h.getX(), h.getY(), health, h.getScale());
-			h.setHP(temp+10);
+			h.healthTotal += 10;
+			h.takeDamage(-10);
 			break;
 		case ATTACK:
 			this.damage += 5;
 			break;
 		case ATTACK_SPEED:
-			if(bulletFrames > 10)
+			if(bulletFrames > 10) {
 				bulletFrames -=5;
+				cBulletFrame = 0;
+			}
 			break;
 		case POTION:
 			h.takeDamage(-10);
@@ -231,5 +235,9 @@ public class Player extends EnvironmentMember{
 
 	public int getHealth() {
 		return health;
+	}
+	
+	public ArrayList<Bullet> getBullets(){
+		return bullets;
 	}
 }

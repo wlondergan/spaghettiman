@@ -25,7 +25,7 @@ public class HealthBar extends Drawable{
 	/**
 	 * This {@code float} represents the total amount of health that a character has. Since it's {@code final}, it can't be changed.
 	 */
-	public final float healthTotal;
+	public float healthTotal;
 
 
 	private float hp;//the remaining health of the player

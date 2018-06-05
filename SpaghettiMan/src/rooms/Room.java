@@ -42,6 +42,8 @@ public class Room extends Drawable{
 			d.draw(g);
 		for(BasicEnemy e: members)
 			e.draw(g);
+		for(Item i: items)
+			i.draw(g);
 	}
 
 	public ArrayList<BasicEnemy> getMembers() {

@@ -19,18 +19,24 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import enemies.BasicEnemy;
 import enemies.Slime;
+import gameMembers.Alert;
 import gameMembers.Bullet;
 import gameMembers.Player;
 import rooms.Door;
+import rooms.Item;
 import rooms.Level;
 
 public class Game extends BasicGameState{
+
+	Rectangle left, right, up, down;
 
 	StateBasedGame game; //the StateBasedGame object
 
 	Player p;
 
 	Level l;
+
+	Alert a;
 
 	/**
 	 * init<br>
@@ -45,6 +51,16 @@ public class Game extends BasicGameState{
 		l = new Level(1);
 
 		gc.setMouseCursor(new Image("assets/cursor.png"), 25, 25);//changes the game's mouse cursor, couldn't do it in GraphicsMain because it isn't an OpenGL class (shrug)
+
+		a = new Alert(200, 0, "Level 1");
+
+		left = new Rectangle(0, 0, 1, 576);
+
+		right = new Rectangle(1023, 0, 1, 576);
+
+		up = new Rectangle(0,0, 1024, 1);
+
+		down = new Rectangle(0, 575, 1024, 1);
 	}
 
 
@@ -57,6 +73,7 @@ public class Game extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
 		p.draw(g);//draw everything to the screen using the draw method of all of the Drawables (TODO: add everything to an array and draw it in one loop?)
 		l.getCurrentRoom().draw(g);
+		a.draw(g);
 	}
 
 	/**
@@ -66,14 +83,34 @@ public class Game extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame game, int i) throws SlickException {
 		p.updateLoc();
+		for(int j = p.getBullets().size()-1; j>=0; j--) {
+			if(p.getBullets().get(j).getX() < 0||p.getBullets().get(j).getX() > 1024||p.getBullets().get(j).getY() < 0 || p.getBullets().get(j).getY() > 576)
+				p.getBullets().remove(j);
+		}
+
+		if(p.getHitbox()[0].intersects(left))
+			p.setX(0);
+		else if(p.getHitbox()[0].intersects(right))
+			p.setX(1024-p.getImage().getScaledCopy(p.getScale()).getWidth());
+
+		if(p.getHitbox()[0].intersects(up))
+			p.setY(0);
+		else if(p.getHitbox()[0].intersects(down))
+			p.setY(576-p.getImage().getScaledCopy(p.getScale()).getHeight());
+
 		p.update(l.getCurrentRoom().getMembers());
-		
+
 		if(gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 			p.mousePressed(gc.getInput().getMouseX(), gc.getInput().getMouseY());
-		
+
 		for(Door d : l.getCurrentRoom().getDoors())
 			if(p.intersects(d))
-				if(d.dir == Door.DoorDirection.LEFT) {
+				if(d.dir == Door.DoorDirection.END) {
+					l = new Level(l.getStage()+1);
+					a.setCurrentMessage("Level " + l.getStage());
+					return;
+				}
+				else if(d.dir == Door.DoorDirection.LEFT) {
 					l.move(Level.LEFT);
 					p.setX(Door.getX(Door.DoorDirection.RIGHT)-p.getImage().getScaledCopy(p.getScale()).getWidth());
 				}
@@ -92,10 +129,39 @@ public class Game extends BasicGameState{
 
 		for(BasicEnemy t : l.getCurrentRoom().getMembers())
 			t.update(p.getCenter());
-		
+
 		for(int n = l.getCurrentRoom().getMembers().size()-1; n>=0; n--)
-			if(l.getCurrentRoom().getMembers().get(n).getHealthBar().isDead())
+			if(l.getCurrentRoom().getMembers().get(n).getHealthBar().isDead()) {
+				Item.ItemValue e = Item.pickRandomDrop();
+				if(e!=null)
+					l.getCurrentRoom().getItems().add(new Item(l.getCurrentRoom().getMembers().get(n).getX(), l.getCurrentRoom().getMembers().get(n).getY(), 1, e));
 				l.getCurrentRoom().getMembers().remove(n);
+			}
+
+		for(int r = l.getCurrentRoom().getItems().size()-1; r>=0; r--)
+			if(p.intersects(l.getCurrentRoom().getItems().get(r))) {
+				Item.ItemValue e = l.getCurrentRoom().getItems().get(r).getVal();
+				p.intersectsItem(e);
+				l.getCurrentRoom().getItems().remove(r);
+
+				switch(e) {
+				case ATTACK:
+					a.setTempMessage("Attack Up");
+					break;
+				case ATTACK_SPEED:
+					a.setTempMessage("Attack Speed Up");
+					break;
+				case HEALTH:
+					a.setTempMessage("Health Increased");
+					break;
+				case POTION:
+					a.setTempMessage("Health Restored");
+					break;
+				case SPEED:
+					a.setTempMessage("Speed Increased");
+					break;
+				}
+			}
 	}
 
 	/**

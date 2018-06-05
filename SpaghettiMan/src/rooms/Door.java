@@ -32,10 +32,12 @@ public class Door extends EnvironmentMember{
 	 * This enum is possessed by the {@code Door} class with the intent of giving a direction to any {@code Door} which is kind of important in a square room.
 	 */
 	public static enum DoorDirection{
-		LEFT, RIGHT, UP, DOWN;
+		LEFT, RIGHT, UP, DOWN, END;
 	}
 	
 	public static float getX(DoorDirection dir) {//gets the x location for any door given the direction
+		if(dir == DoorDirection.END)
+			return 1024/2-50;
 		if(dir == DoorDirection.UP||dir == DoorDirection.DOWN)
 			return 1024/2-50;
 		else if(dir == DoorDirection.LEFT)
@@ -45,6 +47,8 @@ public class Door extends EnvironmentMember{
 	}
 	
 	public static float getY(DoorDirection dir) {//gets the y location for any door given the direction
+		if(dir == DoorDirection.END)
+			return 576/2-50;
 		if(dir == DoorDirection.LEFT||dir == DoorDirection.RIGHT)
 			return 576/2-50;
 		else if(dir == DoorDirection.UP)
@@ -54,6 +58,8 @@ public class Door extends EnvironmentMember{
 	}
 	
 	private static String getImage(DoorDirection dir) {//gets the image path for a door given the direction
+		if(dir == DoorDirection.END)
+			return "assets/hole.png";
 		if(dir == DoorDirection.LEFT || dir==DoorDirection.RIGHT)
 			return "assets/DoorSide.png";
 		else
