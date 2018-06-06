@@ -26,7 +26,7 @@ public class Item extends EnvironmentMember{
 	private ItemValue val;
 
 	/**
-	 * The only constructor for the class. It assigns this item a value
+	 * The only constructor for the class. It assigns this item a value and gives it a location.
 	 * @param x  the x location of the item
 	 * @param y  the y location of the item
 	 * @param scale  the scale of the item
@@ -75,7 +75,7 @@ public class Item extends EnvironmentMember{
 
 	/**
 	 * Picks a random drop value, for when an enemy is killed. Only a subset of items will come from this method.
-	 * @return
+	 * @return the random item value
 	 */
 	public static ItemValue pickRandomDrop() {
 		return DROP_VALUES.get((int)(Math.random()*DROP_VALUES.size()));

@@ -11,6 +11,7 @@ public class Bullet extends EnvironmentMember {
 	
 	/**
 	 * The constructor for the class takes two sets of coordinates: The player(or other bullet origin)'s location (px, py) and the cursor (or destination of the bullet)'s coordinates (cx, cy) and converts them into a vector that the bullet travels along.
+	 * @param vel  the new velocity of the bullet
 	 * @param px  the x coordinate origin of the bullet
 	 * @param py  the y coordinate origin of the bullet
 	 * @param cx  the x coordinate destination of the bullet

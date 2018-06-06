@@ -36,7 +36,6 @@ public class Room extends Drawable{
 	 */
 	@Override
 	public void draw(Graphics g) {
-		//TODO: make the room look pretty
 		for(Door d: doors)
 			d.draw(g);
 		for(BasicEnemy e: members)

@@ -9,8 +9,8 @@ public class Point {
 
 	/**
 	 * The constructor. Sets the x and y variables.
-	 * @param x
-	 * @param y
+	 * @param x  the x location
+	 * @param y  the y location
 	 */
 	public Point (float x, float y){
 		this.x = x;
