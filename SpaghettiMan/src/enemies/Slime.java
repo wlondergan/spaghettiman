@@ -26,13 +26,14 @@ public class Slime extends BasicEnemy{
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(getImage(), (float)getX(), (float)getY());
+		g.drawImage(getImage(), getX(), getY());
 		getHealthBar().draw(g);
 	}
 
 	/**
 	 * Follows the character around based on its location.
 	 */
+	@Override
 	public void update(Point p){
 		follow(p, SPEED);
 		getHealthBar().setLoc(this.getLoc());

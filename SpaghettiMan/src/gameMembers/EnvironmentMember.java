@@ -89,6 +89,7 @@ public abstract class EnvironmentMember extends Drawable{
 	 * </code>
 	 * @param g  the Graphics object required to draw
 	 */
+	@Override
 	public void draw(Graphics g){
 		g.drawImage(characterImage.getScaledCopy(scale), getX(), getY());
 	}

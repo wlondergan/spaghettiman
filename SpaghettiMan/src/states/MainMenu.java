@@ -7,7 +7,6 @@ package states;
  * 1/4/18: created the class, commented (Hughes)
  */
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer; //imports
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

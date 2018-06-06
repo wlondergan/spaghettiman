@@ -7,8 +7,6 @@ package gameMembers;
  */
 public class Bullet extends EnvironmentMember {
 	
-	private float vel;
-	
 	private float xVel, yVel;//These velocity variables represent the Cartesian slope values of the float. This is needed because the screen rendering is done in a Cartesian coordinate system.
 	
 	/**
@@ -20,7 +18,6 @@ public class Bullet extends EnvironmentMember {
 	 */
 	public Bullet(float vel, float px, float py, float cx, float cy) {
 		super(px, py, "assets/Bullet.png", .025f);//super constructor
-		this.vel = vel;
 		//now, triangles
 		double theta = Math.atan2(cx-px, cy-py);//find the angle that the cursor is at relative to the origin
 		xVel = (float)(vel*Math.sin(theta));//turn this into x and y components of a vector with length SPEED

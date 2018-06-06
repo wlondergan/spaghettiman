@@ -5,7 +5,6 @@ import org.newdawn.slick.Graphics;
 
 import enemies.BasicEnemy;
 import gameMembers.Drawable;
-import gameMembers.EnvironmentMember;
 
 /**
  * This class represents a room in a level.<br>

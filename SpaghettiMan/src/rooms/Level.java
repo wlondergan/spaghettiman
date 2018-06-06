@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import enemies.JumpyGuy;
 import enemies.ShootyGuy;
 import enemies.Slime;
-import gameMembers.EnvironmentMember;
 import enemies.BasicEnemy;
 
 /**
@@ -83,13 +82,13 @@ public class Level{
 			int k = (int)(Math.random()*5);
 			switch(k) {
 			case 0:
-				enemies.add(new Slime((int)(Math.random()*964+30), (int)((int)(Math.random()*516)+30)));
+				enemies.add(new Slime((int)(Math.random()*964+30), (int)(Math.random()*516)+30));
 				break;
 			case 1:
-				enemies.add(new JumpyGuy((int)(Math.random()*964+30), (int)((int)(Math.random()*516)+30)));
+				enemies.add(new JumpyGuy((int)(Math.random()*964+30), (int)(Math.random()*516)+30));
 				break;
 			case 2:
-				enemies.add(new ShootyGuy((int)(Math.random()*964+30), (int)((int)(Math.random()*516)+30)));
+				enemies.add(new ShootyGuy((int)(Math.random()*964+30), (int)(Math.random()*516)+30));
 			default:
 				break;
 			}
@@ -118,6 +117,7 @@ public class Level{
 	}
 
 	public static final int LEFT = 1, UP = 2, RIGHT = 3, DOWN = 4;
+	
 	/**
 	 * This method should be invoked whenever a {@code Door} is touched by the character.<br>
 	 * It moves the location of the character in the direction of the {@code Door} that they touch.<p>

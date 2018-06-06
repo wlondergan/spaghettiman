@@ -5,9 +5,6 @@ package states;
  */
 
 import java.awt.Rectangle;
-import java.util.ArrayList;
-
-import org.lwjgl.input.Mouse;
 //imports
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,9 +15,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import enemies.BasicEnemy;
-import enemies.Slime;
 import gameMembers.Alert;
-import gameMembers.Bullet;
 import gameMembers.Player;
 import rooms.Door;
 import rooms.Item;

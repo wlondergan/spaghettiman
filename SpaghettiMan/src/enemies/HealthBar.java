@@ -1,14 +1,8 @@
 package enemies;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-
 import gameMembers.Drawable;
-import gameMembers.Point;
 
 /**
  * <h1>{@code HealthBar}</h1><p>
@@ -54,6 +48,7 @@ public class HealthBar extends Drawable{
 	 * Draws the HealthBar to the screen.
 	 * @param g  the {@code Graphics} object required to make this work
 	 */
+	@Override
 	public void draw(Graphics g){
 		g.setColor(Color.gray);
 		g.fillRect(getLoc().x, getLoc().y, 100*scale, 20*scale);//these numbers might have to be tweaked

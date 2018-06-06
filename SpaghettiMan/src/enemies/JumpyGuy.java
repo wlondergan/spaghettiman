@@ -25,9 +25,6 @@ public class JumpyGuy extends BasicEnemy{
 	 */
 	public static final int JUMP_VEL = 13;
 
-	//the point that this character is following during a jump
-	private Point followPoint;
-
 	//tracks the current frame to allow this character to determine when to jump
 	private int currentFrame;
 
@@ -40,7 +37,6 @@ public class JumpyGuy extends BasicEnemy{
 	public JumpyGuy(float x, float y) {
 		super(x, y, "assets/jumpy_guy.png", 1, 30);
 		currentFrame = 0;
-		followPoint = new Point(x, y);
 	}
 
 	/**
@@ -52,7 +48,6 @@ public class JumpyGuy extends BasicEnemy{
 	public void update(Point p) {
 		currentFrame++;
 		if(currentFrame > JUMP_FRAMES) {
-			followPoint = p;
 			follow(p, JUMP_VEL);
 			if(currentFrame == JUMP_FRAMES+JUMPING_FRAMES)
 				currentFrame = 0;
