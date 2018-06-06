@@ -28,8 +28,10 @@ public class ShootyGuy extends BasicEnemy{
 	 */
 	public static final int WAIT_FRAMES = 60;
 	
+	//the character's bullets
 	private ArrayList<Bullet> bullets;
 	
+	//the current frame, lets the character decide when to shoot bullets
 	private int currentFrame;
 	
 	/**
