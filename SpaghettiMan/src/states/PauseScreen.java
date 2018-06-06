@@ -8,9 +8,9 @@ package states;
  * 1/4/2017: created class, commented thoroughly (Hughes)
  */
 
-import org.newdawn.slick.Color;//imports
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -18,6 +18,9 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class PauseScreen extends BasicGameState{
 	StateBasedGame game;//the StateBasedGame object, don't touch this
+
+	PlayButton unpause;
+	PlayButton mainMenu;
 
 	@Override
 	/**
@@ -27,6 +30,8 @@ public class PauseScreen extends BasicGameState{
 	 */
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		this.game = game; //don't touch this line
+		unpause = new PlayButton(387, 300, "assets/unpausebutton.png");
+		mainMenu = new PlayButton(387, 450, "assets/menubutton.png");
 	}
 
 	@Override
@@ -36,10 +41,9 @@ public class PauseScreen extends BasicGameState{
 	 * draws the screen in parallel with update, don't use this method to update the game state (AT ALL!!)
 	 */
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(Color.green);
-		g.fillRect(-1, -1, gc.getScreenWidth(), gc.getScreenHeight());//fills the screen with a green rectangle
-		g.setColor(Color.black);
-		g.drawString("State 3", gc.getScreenWidth()/2, gc.getScreenHeight()/2);//draws the state number to the screen in black
+		g.drawImage(new Image("assets/pausescreen.png"), 0,0);
+		unpause.draw(g);
+		mainMenu.draw(g);
 	}
 
 	@Override
@@ -49,6 +53,15 @@ public class PauseScreen extends BasicGameState{
 	 * updates the game state in parallel with render: currently locked to 60fps
 	 */
 	public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+		if(gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
+			if(unpause.isClicked(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
+				game.enterState(2);
+			else if(mainMenu.isClicked(gc.getInput().getMouseX(), gc.getInput().getMouseY())) {
+				game.enterState(1);
+				game.getState(2).init(gc, sbg);
+			}
+			
+		}
 	}
 
 	@Override
@@ -59,10 +72,10 @@ public class PauseScreen extends BasicGameState{
 	 */
 	public void keyPressed(int key, char c){
 		switch(key){
-		case Input.KEY_1:
-			game.enterState(1);
+		case Input.KEY_P:
+			game.enterState(2);
 			break;
-		case Input.KEY_2:
+		case Input.KEY_ESCAPE:
 			game.enterState(2);
 			break;
 		}

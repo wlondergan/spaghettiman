@@ -46,7 +46,7 @@ public class Game extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		this.game = game;//don't touch this line
 
-		p = new Player(0,0);//initialize p at the point (0,0)
+		p = new Player(400,250);//initialize p at the point (0,0)
 
 		l = new Level(1);
 
@@ -99,6 +99,11 @@ public class Game extends BasicGameState{
 			p.setY(576-p.getImage().getScaledCopy(p.getScale()).getHeight());
 
 		p.update(l.getCurrentRoom().getMembers());
+		
+		if(p.h.isDead()) {
+			game.enterState(1);
+			this.init(gc, game);
+		}
 
 		if(gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 			p.mousePressed(gc.getInput().getMouseX(), gc.getInput().getMouseY());
@@ -173,17 +178,10 @@ public class Game extends BasicGameState{
 	public void keyPressed(int key, char c){
 		p.keyDown(key);
 		switch(key){//switch around the key input
-
-		case Input.KEY_1://if it's "1" on the keyboard, do:
-			game.enterState(1);//enters the #1 gameState (the class whose getId() method returns 1)
-			break;
-
-		case Input.KEY_3://if it's "3" on the keyboard, do:
-			game.enterState(3);//enters the #3 gameState (the class whose getId() method returns 3)
-			break;
-
+		case Input.KEY_P:
+		case Input.KEY_ESCAPE:
+			game.enterState(3);
 		}
-
 	}
 
 	/**

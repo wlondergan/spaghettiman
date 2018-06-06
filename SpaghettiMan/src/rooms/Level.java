@@ -83,13 +83,13 @@ public class Level{
 			int k = (int)(Math.random()*5);
 			switch(k) {
 			case 0:
-				enemies.add(new Slime((int)(Math.random()*768)-128, (int)((int)(Math.random()*432)-72)));
+				enemies.add(new Slime((int)(Math.random()*964+30), (int)((int)(Math.random()*516)+30)));
 				break;
 			case 1:
-				enemies.add(new JumpyGuy((int)(Math.random()*768)-128, (int)((int)(Math.random()*432)-72)));
+				enemies.add(new JumpyGuy((int)(Math.random()*964+30), (int)((int)(Math.random()*516)+30)));
 				break;
 			case 2:
-				enemies.add(new ShootyGuy((int)(Math.random()*768)-128, (int)((int)(Math.random()*432)-72)));
+				enemies.add(new ShootyGuy((int)(Math.random()*964+30), (int)((int)(Math.random()*516)+30)));
 			default:
 				break;
 			}

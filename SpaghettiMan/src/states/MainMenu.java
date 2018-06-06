@@ -19,6 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class MainMenu extends BasicGameState{
 	StateBasedGame game;
 
+	PlayButton p;
 
 	@Override
 	/**
@@ -28,6 +29,7 @@ public class MainMenu extends BasicGameState{
 	 */
 	public void init(GameContainer gc, StateBasedGame game) throws SlickException {
 		this.game = game;//don't touch this line
+		p = new PlayButton(387, 400, "assets/playbutton.png");
 	}
 
 	@Override
@@ -37,10 +39,8 @@ public class MainMenu extends BasicGameState{
 	 * runs as fast as the computer can handle it, drawing everything to the screen (actually, locked to 60FPS for the moment)
 	 */
 	public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-		g.setColor(Color.blue);
-		g.fillRect(-1, -1, gc.getScreenWidth(), gc.getScreenHeight());
-		g.setColor(Color.black);
-		g.drawString("State 1", gc.getScreenWidth()/2, gc.getScreenHeight()/2);
+		g.drawImage(new Image("assets/titlepage.png"), 0, 0);
+		p.draw(g);
 	}
 
 	@Override
@@ -50,7 +50,9 @@ public class MainMenu extends BasicGameState{
 	 * runs in parallel with the render method. Use this to actually update the game and use render to draw it all.
 	 */
 	public void update(GameContainer gc, StateBasedGame game, int i) throws SlickException {
-
+		if(gc.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
+			if(p.isClicked(gc.getInput().getMouseX(), gc.getInput().getMouseY()))
+				game.enterState(2);
 	}
 
 	@Override

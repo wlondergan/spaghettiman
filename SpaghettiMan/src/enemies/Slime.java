@@ -8,7 +8,7 @@ public class Slime extends BasicEnemy{
 	public static final float SPEED = 1.3f;
 	
 	public Slime(float x, float y){
-		super(x, y, "assets/slime.png", 0.5f, 40);
+		super(x, y, "assets/slime.png", 1f, 40);
 	}
 
 	public void move(Point p) {

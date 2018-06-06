@@ -27,7 +27,7 @@ public class Player extends EnvironmentMember{
 	private int bulletFrames, cBulletFrame;
 	private float damage;
 
-	HealthBar h;
+	public HealthBar h;
 
 	private ArrayList<Bullet> bullets;
 
@@ -47,7 +47,6 @@ public class Player extends EnvironmentMember{
 		bulletFrames = cBulletFrame = 20;
 		damage = 5;
 		h = new HealthBar(health, 0, 0, 2);
-		
 	}
 
 	private boolean left, right, up, down;
@@ -155,9 +154,10 @@ public class Player extends EnvironmentMember{
 		if(cBulletFrame<bulletFrames)
 			cBulletFrame++;
 		for(BasicEnemy e: enemies) {
-			for(Bullet b : bullets) {
-				if(b.intersects(e)) {
+			for(int i = bullets.size()-1; i>=0; i--) {
+				if(bullets.get(i).intersects(e)) {
 					e.getHealthBar().takeDamage(damage);
+					bullets.remove(i);
 				}
 			}
 		}
@@ -236,7 +236,7 @@ public class Player extends EnvironmentMember{
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public ArrayList<Bullet> getBullets(){
 		return bullets;
 	}
