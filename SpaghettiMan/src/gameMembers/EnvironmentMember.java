@@ -15,9 +15,7 @@ import org.newdawn.slick.SlickException;
  */
 public abstract class EnvironmentMember extends Drawable{
 	
-	
 	private Image characterImage;//the class's Image
-	
 	
 	private float scale;//the scale of the character's image. Dynamic currently to allow camera scaling.
 	
@@ -42,14 +40,12 @@ public abstract class EnvironmentMember extends Drawable{
 
 	
 	/**
-	 * <code>getHitbox</code><br>
-	 * Gives a hitbox for the character. Makes collision detection somewhat easier.<br>
-	 * <br>
+	 * Gives a hitbox for the character. Makes collision detection somewhat easier.<p>
 	 * This hitbox is in the form of a an array of <code>Java.awt.Rectangle</code>. The relevant constructor for the <code>Rectangle</code> is <br><code>(int xLoc, int yLoc, int xLength, int yLength)</code>.<p>
-	 * This class is used because of its intersects method: 
-	 * <code>
-	 * if(p.getHitBox().intersects(g.getHitbox))
-	 * </code><br>
+	 * This class is used because of its intersects method:<p>
+	 * <code><text>
+	 * 		if(p.getHitBox().intersects(g.getHitbox))
+	 * </text></code><p>
 	 * is the intended use for the Rectangle. This is baked in and makes collision a lot easier.
 	 * @return r  the {@code Rectangle} hitbox of the {@code EnvironmentMember}
 	 */
@@ -59,7 +55,6 @@ public abstract class EnvironmentMember extends Drawable{
 	
 	
 	/**
-	 * {@code intersects}<p>
 	 * This method should be used to determine if 2 {@code EnvironmentMember} objects are colliding with each other. Since the hitbox is defined as an array, it's useful to have this one baked in method.<br>
 	 * This method might have to be rewritten, but for now this works fine.
 	 * @param e  the {@code EnvironmentMember} to be checked against for collision
@@ -86,7 +81,6 @@ public abstract class EnvironmentMember extends Drawable{
 
 	
 	/**
-	 * <code>draw</code><br>
 	 * This method is inherited from the {@link Drawable} class. This implementation takes a <code>Graphics</code> object when called and uses it to draw the object on the screen. 
 	 * The intended use of this method is to be able to draw an entire <code>ArrayList</code> or <code>Drawable[]</code> and draw the entire thing using a simple loop:<br>
 	 * <br><code>
@@ -101,8 +95,6 @@ public abstract class EnvironmentMember extends Drawable{
 	
 	
 	/**
-	 * {@code changeScaleRelativeToScreen}
-	 * <p>
 	 * This method should be called when the screen's scale changes (e.g. the camera zooms out or in.) It modifies the {@code x} and {@code y} values inherited from {@code Drawable} to fit the new scale and changes the scale of the Image to make it look ok as well.
 	 * @param scale  The amount that the screen is being scaled by (e.g. .75 reduces the size of this object by 25% from 100%, but if you set the scale to .75 again nothing will happen)
 	 */
@@ -113,9 +105,8 @@ public abstract class EnvironmentMember extends Drawable{
 	}
 	
 	/**
-	 * {@code getScale}<p>
 	 * {@code float scale} is the scale of the {@code Image} representing the {@code EnvironmentMember}. This is useful for changing the size of the character with respect to the screen
-	 * @return
+	 * @return  the scale of the character
 	 */
 	public float getScale() {
 		return scale;
@@ -126,6 +117,11 @@ public abstract class EnvironmentMember extends Drawable{
 		this.scale = scale;
 	}
 	
+	/**
+	 * Returns the center point of the {@code EnvironmentMember}.<br>
+	 * Normally Characters are defined by their corner coordinates but occasionally it is useful to get the center coordinates.
+	 * @return
+	 */
 	public Point getCenter() {
 		return new Point(getX() + getImage().getScaledCopy(scale).getWidth()/2, getY() + getImage().getScaledCopy(scale).getHeight()/2);
 	}

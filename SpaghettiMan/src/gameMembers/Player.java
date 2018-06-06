@@ -19,12 +19,17 @@ import rooms.Item;
 public class Player extends EnvironmentMember{
 
 	private int health;
+	
 	private int currentFrame;
 
 	private float vel;
+	
 	private float diagVel;
+	
 	private static final int INVINCIBILITY_FRAMES = 40;
+	
 	private int bulletFrames, cBulletFrame;
+	
 	private float damage;
 
 	public HealthBar h;
@@ -32,7 +37,7 @@ public class Player extends EnvironmentMember{
 	private ArrayList<Bullet> bullets;
 
 	/**
-	 * Calls the EnvironmentMember constructor.
+	 * Calls the EnvironmentMember constructor and sets some local variable values.
 	 * @see EnvironmentMember
 	 * @param x  The x location of the Player
 	 * @param y  The y location of the Player
@@ -56,7 +61,6 @@ public class Player extends EnvironmentMember{
 	 * This should be called as an input from some other class that handles input.<p>
 	 * Every input comes in as an integer and should be used in conjunction with the Input constants.<br>
 	 * For example, {@code Input.KEY_A} will be the integer passed to this method when the "A" button is pressed on the keyboard.
-	 * 
 	 * @param key  the key that was pressed, as an integer from the {@code Input} class.
 	 */
 	public void keyDown(int key){
@@ -98,6 +102,12 @@ public class Player extends EnvironmentMember{
 		}
 	}
 
+	/**
+	 * This method should be called when the mouse is pressed. <br>
+	 * It creates a new bullet based on where the mouse cursor is located.
+	 * @param x  the cursor's x location
+	 * @param y  the cursor's y location
+	 */
 	public void mousePressed(int x, int y) {
 		if(cBulletFrame == bulletFrames) {
 			bullets.add(new Bullet(20, getCenter().x, getCenter().y, x, y));
@@ -107,7 +117,7 @@ public class Player extends EnvironmentMember{
 
 	/**
 	 * This method updates the location of the character based on what keys are pressed.<br>
-	 * It handles diagonal movement as an up and down movement, both of which are roughly the normal velocity divided by the square root of two, per the pythagorean theorem.<br>
+	 * It handles diagonal movement as an x and y movement, both of which are roughly the normal velocity divided by the square root of two, per the pythagorean theorem.<br>
 	 * <p>
 	 * This method should be called from the main class that handles game objects, to update the location of the character.
 	 */
@@ -184,6 +194,11 @@ public class Player extends EnvironmentMember{
 
 	}
 
+	/**
+	 * This method should be called when the character intersects an {@code Item}.<br>
+	 * Given the type of the item, this method will modify the character's stats.
+	 * @param e  the type of the item (as a {@link Item.ItemValue})
+	 */
 	public void intersectsItem(Item.ItemValue e) {
 		switch(e) {//TODO: add label when an item is picked up
 		case HEALTH:

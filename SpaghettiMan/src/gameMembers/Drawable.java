@@ -13,7 +13,6 @@ public abstract class Drawable {
 	
 	private Point loc;//the location of the Drawable object
 	
-	
 	/**
 	 * Sets the initial x and y location of the object
 	 * @param x  the x location of the object in Cartesian space
@@ -24,7 +23,6 @@ public abstract class Drawable {
 	}
 	
 	/**
-	 * {@code draw}<p>
 	 * This method is required to be implemented by any class that inherits it. This allows draw to be called on a generic {@code Drawable[]}.<p>
 	 * Implementation of this method should involve putting a graphical representation of the class on the screen in some way.<p>
 	 * An example of how to draw:<p>
