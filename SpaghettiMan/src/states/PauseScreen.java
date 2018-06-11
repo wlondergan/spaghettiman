@@ -1,11 +1,7 @@
 package states;
 /**
- * PauseScreen
+ * The pause screen class for the project. 
  * @author Hughes
- * The PauseScreen class for the project. Should implement a PauseScreen, but only once we get further into the project
- * 
- * EDITS:
- * 1/4/2017: created class, commented thoroughly (Hughes)
  */
 
 import org.newdawn.slick.GameContainer;

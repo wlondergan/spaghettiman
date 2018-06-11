@@ -1,10 +1,7 @@
 package states;
 /**
- * MainMenu
- * The main menu class. Should implement a main menu later on in the project.
+ * The main menu class.
  * @author Hughes
- * EDITS:
- * 1/4/18: created the class, commented (Hughes)
  */
 
 import org.newdawn.slick.GameContainer; //imports

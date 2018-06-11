@@ -1,7 +1,7 @@
 package states;
 /**
- * @author Hughes
  * The Game class for the SpaghettiMan project. The main gamestate for the project.
+ * @author Hughes
  */
 
 import java.awt.Rectangle;
